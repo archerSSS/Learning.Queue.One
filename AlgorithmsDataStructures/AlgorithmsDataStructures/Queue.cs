@@ -35,5 +35,12 @@ namespace AlgorithmsDataStructures
             return 0; // размер очереди
         }
 
+        public void ReAddHead(int count)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                Enqueue(Dequeue());
+            }
+        }
     }
 }
