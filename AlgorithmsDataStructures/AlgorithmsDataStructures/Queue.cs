@@ -17,7 +17,6 @@ namespace AlgorithmsDataStructures
         public void Enqueue(T item)
         {
             list.Add(item);
-            // вставка в хвост
         }
 
         public T Dequeue()
@@ -25,14 +24,13 @@ namespace AlgorithmsDataStructures
             T item = list.Find(delegate(T it) { return it.GetType() == typeof(T); });
             list.RemoveAt(0);
             return item;
-            // выдача из головы
-            return default(T); // если очередь пустая
+            return default(T);
         }
 
         public int Size()
         {
             return list.Count;
-            return 0; // размер очереди
+            return 0;
         }
 
         public void ReAddHead(int count)
