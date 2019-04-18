@@ -36,7 +36,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DryClass.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Queue.cs" />
   </ItemGroup>
