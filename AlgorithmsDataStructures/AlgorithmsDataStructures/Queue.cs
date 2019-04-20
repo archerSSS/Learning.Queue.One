@@ -21,9 +21,12 @@ namespace AlgorithmsDataStructures
 
         public T Dequeue()
         {
-            T item = list.Find(delegate(T it) { return it.GetType() == typeof(T); });
-            list.RemoveAt(0);
-            return item;
+            if (list.Count != 0)
+            {
+                T item = list.Find(delegate (T it) { return it.GetType() == typeof(T); });
+                list.RemoveAt(0);
+                return item;
+            }
             return default(T);
         }
 

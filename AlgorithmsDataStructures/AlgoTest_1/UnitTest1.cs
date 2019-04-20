@@ -70,6 +70,18 @@ namespace AlgoTest_1
 
 
         [TestMethod]
+        public void TestEnqDeqSize_4()
+        {
+            Queue<int> que = new Queue<int>();
+
+            que.Enqueue(1);
+            que.Dequeue();
+            que.Dequeue();
+            Assert.AreEqual(0, que.Size());
+        }
+
+
+        [TestMethod]
         public void TestEnqSize_1()
         {
             Queue<int> que = new Queue<int>();
@@ -302,6 +314,21 @@ namespace AlgoTest_1
             Assert.AreEqual(2, que.Dequeue());
             Assert.AreEqual(1, que.Dequeue());
             Assert.AreEqual(0, que.Size());
+        }
+
+
+        [TestMethod]
+        public void TestEnqDeqTimer_1()
+        {
+            Queue<int> que = new Queue<int>();
+            for (int i1 = 0; i1 < 100000; i1++)
+            {
+                que.Enqueue(i1+1);
+            }
+            for (int i2 = 0; i2 < 100000; i2++)
+            {
+                que.Dequeue();
+            }
         }
     }
 
