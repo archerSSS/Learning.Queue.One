@@ -82,6 +82,23 @@ namespace AlgoTest_1
 
 
         [TestMethod]
+        public void TestEnqDeqSize_5()
+        {
+            Queue<int> que = new Queue<int>();
+            Queue<String> que2 = new Queue<String>();
+
+            int i = que.Dequeue();
+            bool b = i == null;
+            Assert.AreEqual(0, i);
+            Assert.AreEqual(false, b);
+
+            String str = que2.Dequeue();
+            b = str == null;
+            Assert.AreEqual(true, b);
+        }
+
+
+        [TestMethod]
         public void TestEnqSize_1()
         {
             Queue<int> que = new Queue<int>();
@@ -124,7 +141,7 @@ namespace AlgoTest_1
             Queue<int> que = new Queue<int>();
             for (int i = 0; i < 5; i++) { que.Enqueue(i + 1); }
 
-            que.ReAddHead(2);
+            que.HeadToTail(2);
             int size = que.Size();
             
             Assert.AreEqual(5, size);
@@ -152,7 +169,7 @@ namespace AlgoTest_1
             Queue<int> que = new Queue<int>();
             que.Enqueue(1);
             que.Enqueue(2);
-            que.ReAddHead(1);
+            que.HeadToTail(1);
             int size = que.Size();
 
             Assert.AreEqual(2, size);
@@ -167,7 +184,7 @@ namespace AlgoTest_1
         {
             Queue<int> que = new Queue<int>();
             que.Enqueue(1);
-            que.ReAddHead(1);
+            que.HeadToTail(1);
             
             Assert.AreEqual(1, que.Size());
             Assert.AreEqual(1, que.Dequeue());
@@ -178,7 +195,7 @@ namespace AlgoTest_1
         [TestMethod]
         public void TestStacksQueue_1()
         {
-            Queue_1<int> que = new Queue_1<int>();
+            QueueAdvanced<int> que = new QueueAdvanced<int>();
             
             for (int i = 1; i < 500; i++)
             {
@@ -196,7 +213,7 @@ namespace AlgoTest_1
         [TestMethod]
         public void TestStacksQueue_2()
         {
-            Queue_1<int> que = new Queue_1<int>();
+            QueueAdvanced<int> que = new QueueAdvanced<int>();
 
             for (int i = 1; i < 5; i++)
             {
@@ -274,12 +291,12 @@ namespace AlgoTest_1
 
 
         [TestMethod]
-        public void TestStacksQueue_6()
+        public void TestStacksQueue_6_HeadToTail()
         {
             Queue<int> que = new Queue<int>();
             for (int i = 0; i < 5; i++) { que.Enqueue(i + 1); }
 
-            que.ReAddHead(2);
+            que.HeadToTail(2);
             int size = que.Size();
 
             Assert.AreEqual(5, size);
@@ -302,18 +319,30 @@ namespace AlgoTest_1
 
 
         [TestMethod]
-        public void TestStacksQueue_7()
+        public void TestStacksQueue_7_HeadToTail()
         {
             Queue<int> que = new Queue<int>();
             que.Enqueue(1);
             que.Enqueue(2);
-            que.ReAddHead(1);
+            que.HeadToTail(1);
             int size = que.Size();
 
             Assert.AreEqual(2, size);
             Assert.AreEqual(2, que.Dequeue());
             Assert.AreEqual(1, que.Dequeue());
             Assert.AreEqual(0, que.Size());
+        }
+
+
+        [TestMethod]
+        public void TestStacksQueue_8_HeadToTail()
+        {
+            Queue<int> que = new Queue<int>();
+
+            que.HeadToTail(1);
+
+            Assert.AreEqual(0, que.Size());
+            Assert.AreEqual(0, que.Dequeue());
         }
 
 
@@ -329,182 +358,6 @@ namespace AlgoTest_1
             {
                 que.Dequeue();
             }
-        }
-    }
-
-
-
-    public class Queue_1<T>
-    {
-
-        Stack<T> stack;
-
-        public Queue_1()
-        {
-            stack = new Stack<T>();
-        }
-
-        public void Enqueue(T item)
-        {
-            Stack<T> local_stack = new Stack<T>();
-            for (int i = stack.Size(); i > 0; i--)
-            {
-                local_stack.Push(stack.Pop());
-            }
-            stack.Push(item);
-            for (int i = local_stack.Size(); i > 0; i--)
-            {
-                stack.Push(local_stack.Pop());
-            }
-        }
-
-        public T Dequeue()
-        {
-            return stack.Pop();
-            return default(T);
-        }
-
-        public int Size()
-        {
-            return stack.Size();
-            return 0;
-        }
-
-        public void ReAddHead(int count)
-        {
-            for (int i = 0; i < count; i++)
-            {
-                Enqueue(Dequeue());
-            }
-        }
-    }
-
-
-
-    public class Stack<T>
-    {
-
-        public DynArray<T> dyn;
-
-        public Stack()
-        {
-            dyn = new DynArray<T>();
-        }
-
-        public int Size()
-        {
-            if (dyn.count != 0) return dyn.count;
-            return 0;
-        }
-
-        public T Pop()
-        {
-            if (dyn.count > 0)
-            {
-                T val = dyn.GetItem(0);
-                dyn.Remove(0);
-                if (dyn.count == 0) return val;
-                return val;
-            }
-            return default(T);
-        }
-
-        public void Push(T val)
-        {
-            if (val == null) return;
-            dyn.Insert(val, 0);
-        }
-
-        public T Peek()
-        {
-            if (dyn.count != 0)
-            {
-                return dyn.GetItem(0);
-            }
-            return default(T);
-        }
-    }
-
-    public class DynArray<T>
-    {
-
-        public T[] array;
-        public int count;
-        public int capacity;
-
-        public DynArray()
-        {
-            count = 0;
-            MakeArray(16);
-        }
-
-
-        public void MakeArray(int new_capacity)
-        {
-            if (array != null)
-            {
-                if (new_capacity < 16) new_capacity = 16;
-                capacity = new_capacity;
-            }
-            else
-            {
-                array = new T[count];
-                capacity = new_capacity;
-            }
-        }
-
-
-        public T GetItem(int index)
-        {
-            if (index < 0 || index >= count) throw new IndexOutOfRangeException();
-            return array[index];
-            return default(T);
-        }
-
-
-        public void Append(T itm)
-        {
-            T[] temp_array = new T[count + 1];
-            array.CopyTo(temp_array, 0);
-            temp_array[count] = itm;
-            array = temp_array;
-            count++;
-            if (count > capacity) MakeArray(capacity * 2);
-        }
-
-
-        public void Insert(T itm, int index)
-        {
-            if (index < 0 || index > count) throw new IndexOutOfRangeException();
-            if (index == count) Append(itm);
-            else
-            {
-                T[] temp_array = new T[count + 1];
-                array.CopyTo(temp_array, 0);
-                for (int i = count; i > index; i--)
-                {
-                    temp_array[i] = array[i - 1];
-                }
-                temp_array[index] = itm;
-                array = temp_array;
-                count++;
-                if (count > capacity) MakeArray(capacity * 2);
-            }
-        }
-
-
-        public void Remove(int index)
-        {
-            if (index < 0 || index >= count) throw new IndexOutOfRangeException();
-            T[] temp_array = new T[count - 1];
-            for (int i = count - 2; i >= 0; i--)
-            {
-                if (i >= index) temp_array[i] = array[i + 1];
-                else temp_array[i] = array[i];
-            }
-            array = temp_array;
-            count--;
-            if (count < capacity / 2) { MakeArray((int)(capacity / 1.5)); }
         }
     }
 }

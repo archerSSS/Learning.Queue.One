@@ -36,8 +36,9 @@ namespace AlgorithmsDataStructures
             return 0;
         }
 
-        public void ReAddHead(int count)
+        public void HeadToTail(int count)
         {
+            if (list.Count == 0) return; 
             for (int i = 0; i < count; i++)
             {
                 Enqueue(Dequeue());
